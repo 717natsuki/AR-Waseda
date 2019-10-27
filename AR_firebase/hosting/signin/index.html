@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../style.css">
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>サインイン</title>
+</head>
+
+<body>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyD36srQdKUVnN8OxQjoR6ts5HdAV5Ppjgg",
+      authDomain: "waseda-sai-ar.firebaseapp.com",
+      databaseURL: "https://waseda-sai-ar.firebaseio.com",
+      projectId: "waseda-sai-ar",
+      storageBucket: "waseda-sai-ar.appspot.com",
+      messagingSenderId: "852005997622",
+      appId: "1:852005997622:web:baa38a2eeca89f7e"
+    };
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+  </script>
+  <script>
+    function sleep(delay) {
+      var start = new Date().getTime();
+      while (new Date().getTime() < start + delay);
+    }
+
+    function submit_id() {
+      var target = document.getElementById("four_id").value;
+      var docRef = db.collection("Participants").doc(target);
+      docRef.get().then(function (doc) {
+        if (doc.exists) {
+          console.log("Document data:", doc.data());
+          document.cookie = 'ARWid=' + target + '; path=/';
+          setTimeout(function () {
+            window.location.href = "../dashboard";
+          }, 1000);
+        } else {
+          alert("IDが間違っています。");
+          console.log("No such id!");
+        }
+      }).catch(function (error) {
+        console.log("これは大変な問題です。:", error);
+      })
+    }
+
+    $(function () {
+      var links = $('a.movepage');
+      links.on('click', function (event) {
+        event.preventDefault();
+      });
+    });
+
+    $(function () {
+      var loading = $('#loading');
+      var links = $('a');
+      loading.addClass('is-hidden');
+      links.on('click', function (event) {
+        event.preventDefault();
+        loading.removeClass('is-hidden');
+      });
+    });
+
+    $(function () {
+      var loading = $('#loading');
+      var links = $('a');
+      loading.addClass('is-hidden');
+      links.on('click', function (event) {
+        event.preventDefault();
+        loading.removeClass('is-hidden');
+        var href = $(this).attr('href'),
+          wait = 700;
+        setTimeout(function () {
+          location.href = href;
+        }, wait);
+      });
+    });
+
+    window.onpageshow = function (event) {
+      if (event.persisted) {
+        var loading = $('#loading');
+        loading.addClass('is-hidden');
+      }
+    };
+  </script>
+
+  <div id="loading"></div>
+  <div class='box'>
+    <div class='wave -one'></div>
+    <div class='wave -two'></div>
+    <div class='wave -three'></div>
+    <div class='title'><span class="mini">WINC PRESENTS</span><br><span class="big">ARスタンプラリー</span><br><span
+        class="mini">AT WASEDASAI</span></div>
+    <div class='title first'>あなたのid</div>
+    <div><input id="four_id" class="title second" type="text" value=""></div>
+    <div><input type="button" id="submit_id" class="title third" value=">ススム" onclick="submit_id()"></div>
+    <div class='rest title fourth'><a href="../index.html">>モドル</a></div>
+  </div>
+</body>
+
+</html>

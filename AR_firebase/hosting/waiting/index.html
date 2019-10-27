@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet">
+  <!-- スタイルシート -->
+  <link rel="stylesheet" type="text/css" href="../style.css">
+  <!-- ビューポート -->
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>支払待ち</title>
+</head>
+
+<body>
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+  <!-- Firestore -->
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+  <script>
+    let firebaseConfig = {
+      apiKey: "AIzaSyD36srQdKUVnN8OxQjoR6ts5HdAV5Ppjgg",
+      authDomain: "waseda-sai-ar.firebaseapp.com",
+      databaseURL: "https://waseda-sai-ar.firebaseio.com",
+      projectId: "waseda-sai-ar",
+      storageBucket: "waseda-sai-ar.appspot.com",
+      messagingSenderId: "852005997622",
+      appId: "1:852005997622:web:baa38a2eeca89f7e"
+    };
+    firebase.initializeApp(firebaseConfig);
+    let db = firebase.firestore();
+
+    let userId = document.cookie.split('=')[1];
+    db.collection("Participants").doc(userId).onSnapshot(doc => {
+      if (doc.exists) {
+        if (doc.data()["approved"] == true) {
+          window.location.href = "../dashboard";
+        }
+      }
+    });
+
+    // ページ遷移アニメーション
+    $(function () {
+      let loading = $('#loading');
+      loading.addClass('is-hidden');
+    });
+
+    window.onpageshow = function (event) {
+      if (event.persisted) {
+        let loading = $('#loading');
+        loading.addClass('is-hidden');
+      }
+    };
+  </script>
+
+  <div id="loading"></div>
+  <div class='box'>
+    <div class='wave -one'></div>
+    <div class='wave -two'></div>
+    <div class='wave -three'></div>
+    <div class='title'><span class="mini">WINC PRESENTS</span><br><span class="big">ARスタンプラリー</span><br><span
+        class="mini">AT WASEDASAI</span></div>
+    <div class='title first'>カウンターで</div>
+    <div class='title second'>300エンを</div>
+    <div class="title third">おしはらいください</div>
+  </div>
+
+</body>
+
+</html>

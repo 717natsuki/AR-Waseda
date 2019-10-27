@@ -1,0 +1,16 @@
+#not_approved {
+    background-color: rgb(245, 232, 163);
+}
+
+#not_approved button {
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+#not_approved span {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
+}

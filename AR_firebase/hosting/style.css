@@ -1,0 +1,347 @@
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+body {
+    line-height: 1;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+nav ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+
+a {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+/* change colours to suit your needs */
+
+ins {
+    background-color: #ff9;
+    color: #000;
+    text-decoration: none;
+}
+
+/* change colours to suit your needs */
+
+mark {
+    background-color: #ff9;
+    color: #000;
+    font-style: italic;
+    font-weight: bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom: 1px dotted;
+    cursor: help;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #cccccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+input, select {
+    padding: 0px !important;
+    vertical-align: middle;
+}
+
+html, body {
+    height: 100%;
+}
+
+html {
+    background: #eee;
+    overscroll-behavior: none;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 500px;
+    font-family: "Nico Moji";
+}
+
+.mini {
+    font-size: 14px;
+    line-height: 4em;
+}
+
+.putit {
+    font-size: 20px;
+    line-height: 1em;
+}
+
+.box {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 2px 30px rgba(0, 0, 0, 0.2);
+    background: #ff7878c0;
+    position: relative;
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
+}
+
+.wave {
+    opacity: 0.4;
+    position: absolute;
+    top: 3%;
+    left: 50%;
+    background: rgb(218, 52, 52);
+    width: 100%;
+    height: 50%;
+    margin-left: -50%;
+    margin-top: -30%;
+    transform-origin: 50% 48%;
+    border-radius: 43%;
+    animation: drift 3000ms infinite linear;
+}
+
+.wave.-three {
+    animation: drift 5000ms infinite linear;
+}
+
+.wave.-two {
+    animation: drift 7000ms infinite linear;
+    opacity: 0.1;
+    background: #720606;
+}
+
+.box:after {
+    content: "";
+    display: block;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #d41841c2, rgba(255, 89, 117, 0.342) 100%, rgba(255, 255, 255, 0.5));
+    z-index: 11;
+    transform: translate3d(0, 0, 0);
+}
+
+.title {
+    position: absolute;
+    left: 0;
+    top: 8%;
+    width: 100%;
+    z-index: 1;
+    line-height: 0.6em;
+    text-align: center;
+    transform: translate3d(0, 0, 0);
+    color: white;
+    letter-spacing: 0.05em;
+    font-family: "Nico Moji";
+    font-size: 35px;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    text-indent: 0.3em;
+}
+
+.zero {
+    top: 40%;
+}
+
+.first {
+    top: 50%;
+}
+
+.box a {
+    text-decoration: none;
+    color: white;
+}
+
+.box input {
+    color: white;
+}
+
+.second {
+    top: 60%;
+    z-index: 100000;
+}
+
+.third {
+    top: 70%;
+    z-index: 100000;
+}
+
+.fourth {
+    top: 80%;
+    z-index: 100000;
+}
+
+#debug_information {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    z-index: 100000;
+    color: white;
+}
+
+.big {
+    font-size: 120%;
+}
+
+@keyframes drift {
+    from {
+        transform: rotate(0deg);
+    }
+    from {
+        transform: rotate(360deg);
+    }
+}
+
+#four_id {
+    left: 10%;
+    width: 80%;
+    color: black;
+    border-radius: 10px;
+}
+
+#nickname_id {
+    left: 10%;
+    width: 80%;
+    color: black;
+    border-radius: 10px;
+}
+
+#submit_id {
+    line-height: 1.2em;
+    background-color: rgba(255, 255, 255, 0);
+    border-style: none;
+    padding-bottom: 30px;
+}
+
+#nickname_button {
+    line-height: 1.2em;
+    background-color: rgba(255, 255, 255, 0);
+    border-style: none;
+    padding-bottom: 30px;
+}
+
+#key_word_button {
+    line-height: 1.2em;
+    background-color: rgba(255, 255, 255, 0);
+    border-style: none;
+    padding-bottom: 30px;
+}
+
+#key_word {
+    left: 10%;
+    width: 80%;
+    color: black;
+    border-radius: 10px;
+}
+
+#loading {
+    background-color: #d83838;
+    position: fixed;
+    top: 0%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    transition: ease .5s;
+    -webkit-transition: ease .5s;
+}
+
+#loading.is-hidden {
+    opacity: 0;
+    top: -100%;
+    -webkit-opacity: 0;
+}
+
+#icon-center {
+    position: absolute;
+    top: 75%;
+    left: calc(50% - 30px);
+    width: 60px;
+    font-size: 60px;
+    z-index: 100000;
+    line-height: 10px;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+#icon-right {
+    position: absolute;
+    top: 75%;
+    right: 10%;
+    font-size: 60px;
+    z-index: 100000;
+    line-height: 10px;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+#icon-left {
+    position: absolute;
+    top: 75%;
+    left: 10%;
+    font-size: 60px;
+    z-index: 100000;
+    line-height: 10px;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    outline: none;
+}
+
+@media screen and (max-height: 400px) {
+    .rest {
+        display: none;
+    }
+
+    .zero {
+        top: 55%;
+    }
+    
+    .first {
+        top: 65%;
+    }
+
+    .second {
+        top: 75%;
+    }
+
+    .third {
+        top: 88%;
+    }
+}

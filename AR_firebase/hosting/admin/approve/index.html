@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title></title>
+</head>
+
+<body>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyD36srQdKUVnN8OxQjoR6ts5HdAV5Ppjgg",
+      authDomain: "waseda-sai-ar.firebaseapp.com",
+      databaseURL: "https://waseda-sai-ar.firebaseio.com",
+      projectId: "waseda-sai-ar",
+      storageBucket: "waseda-sai-ar.appspot.com",
+      messagingSenderId: "852005997622",
+      appId: "1:852005997622:web:baa38a2eeca89f7e"
+    };
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+  </script>
+  <script>
+    var buttonIds = [];
+    db.collection("Participants").where("approved", "==", false)
+      .onSnapshot(snapshot => {
+        snapshot.docChanges().forEach(change => {
+          if (change.type === "added") {
+            var button = document.createElement("button");
+            button.innerText = "承認";
+            button.classList.add(change.doc.id);
+            button.id = change.doc.id;
+            buttonIds.push(button.id);
+            document.getElementById("not_approved").appendChild(button);
+            document.getElementById("not_approved").innerHTML += "<span class=" + change.doc.id + ">　" + change.doc.id + " / " + change.doc.data().nickname + "</span><br>";
+          }
+        })
+        while (buttonIds.length != 0) {
+          document.getElementById(buttonIds[0]).onclick = function () {
+            removeRow()
+          };
+          buttonIds.shift();
+        }
+      })
+
+    function removeRow() {
+      var button = event.target;
+
+      db.collection("Participants").doc(button.id).set({
+        approved: true,
+        registrationDate: new Date(),
+        finishedDate: null,
+        visitedCircles: []
+      }, {
+        merge: true
+      });
+
+      var deletedElements = document.getElementsByClassName(button.id);
+      deletedElements[0].remove();
+      deletedElements[0].remove();
+    }
+  </script>
+  <div id="not_approved"></div>
+</body>
+
+</html>

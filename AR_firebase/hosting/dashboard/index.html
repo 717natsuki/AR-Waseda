@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/5097b44aa4.js" crossorigin="anonymous"></script>
+  <!-- スタイルシート -->
+  <link rel="stylesheet" type="text/css" href="../style.css">
+  <!-- ビューポート -->
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>ダッシュボード</title>
+</head>
+
+<body>
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+  <!-- Firestore -->
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+  <script>
+    let firebaseConfig = {
+      apiKey: "AIzaSyD36srQdKUVnN8OxQjoR6ts5HdAV5Ppjgg",
+      authDomain: "waseda-sai-ar.firebaseapp.com",
+      databaseURL: "https://waseda-sai-ar.firebaseio.com",
+      projectId: "waseda-sai-ar",
+      storageBucket: "waseda-sai-ar.appspot.com",
+      messagingSenderId: "852005997622",
+      appId: "1:852005997622:web:baa38a2eeca89f7e"
+    };
+    firebase.initializeApp(firebaseConfig);
+    let db = firebase.firestore();
+
+    let userId = document.cookie.split('=')[1];
+    if (!userId) {
+      window.location.href = "../signin";
+    }
+    else {
+      let docRef = db.collection("Participants").doc(userId);
+      docRef.get().then(doc => {
+        if (doc.exists) {
+          console.log("Document data:", doc.data()["approved"]);
+          if (doc.data()["approved"] == false) {
+            window.location.href = "../waiting";
+          }
+          $('#id_field').text(userId + " / ");
+          $('#nickname_field').text(doc.data()["nickname"] + " さん");
+        } else {
+          console.log("No such document!");
+        }
+      }).catch(function (error) {
+        console.log("Error getting document:", error);
+      });
+
+    }
+
+    function submit() {
+      function random_item(items) {
+        return items[Math.floor(Math.random() * items.length)];
+      }
+      let target = document.getElementById("key_word").value;
+      if (target) {
+        target = target.toLowerCase();
+        let docRef = db.collection("keyword").doc(target);
+        docRef.get().then(function (doc) {
+          if (doc.exists) {
+            let key_of_circle = doc.data()["key_num"];
+            let userId = document.cookie.split('=')[1];
+            let docRef = db.collection("Participants").doc(userId);
+            docRef.get().then(function (doc) {
+              if (doc.exists) {
+                all_circles = doc.data()["circles"]
+                let index = all_circles.indexOf(key_of_circle);
+                if (index > -1) {
+                  all_circles.splice(index, 1);
+                  db.collection("Participants").doc(userId).update({
+                    circles: all_circles
+                  })
+                }
+              }
+            });
+            docRef.get().then(function (doc) {
+              if (doc.exists) {
+                let items = doc.data()["circles"]
+                let id_circle = random_item(items)
+                let cityRef = db.collection('Participants').doc(userId);
+                let setWithMerge = cityRef.update({
+                  id_circle: id_circle
+                });
+              }
+            });
+            let circle = db.collection("Circles").doc(key_of_circle);
+            circle.get().then(function (doc) {
+              let all_ids = doc.data()["participants_id"];
+              all_ids.push(userId);
+              return circle.update({
+                participants_id: all_ids
+              });
+            });
+            alert("チェックポイント通過！次のサークルを確認してください！");
+            document.getElementById('key_word').value = "";
+          } else {
+            alert("キーワードが間違っています。");
+          }
+        });
+      } else {
+        alert("キーワードを入力してください。")
+      }
+    }
+
+    function delete_cookie() {
+      document.cookie = "userId=; expires=0" + ';path=/';
+      window.location.href = "../index.html";
+    }
+
+    // ページ遷移アニメーション
+    $(function () {
+      let links = $('a.movepage');
+      links.on('click', function (event) {
+        event.preventDefault();
+      });
+    });
+
+    $(function () {
+      let loading = $('#loading');
+      let links = $('a');
+      loading.addClass('is-hidden');
+      links.on('click', function (event) {
+        event.preventDefault();
+        loading.removeClass('is-hidden');
+      });
+    });
+
+    $(function () {
+      let loading = $('#loading');
+      let links = $('a');
+      loading.addClass('is-hidden');
+      links.on('click', function (event) {
+        event.preventDefault();
+        loading.removeClass('is-hidden');
+        let href = $(this).attr('href'),
+          wait = 700;
+        setTimeout(function () {
+          location.href = href;
+        }, wait);
+      });
+    });
+
+    window.onpageshow = function (event) {
+      if (event.persisted) {
+        let loading = $('#loading');
+        loading.addClass('is-hidden');
+      }
+    };
+  </script>
+
+  <div id="loading"></div>
+  <div class='box'>
+    <div class='wave -one'></div>
+    <div class='wave -two'></div>
+    <div class='wave -three'></div>
+    <div id="debug_information"><span id="id_field"></span><span id="nickname_field"></span></div>
+    <div class='title'><span class="mini">WINC PRESENTS</span><br><span class="big">ARスタンプラリー</span><br><span
+        class="mini">AT WASEDASAI</span></div>
+    <div class='title zero'>キーワード</div>
+    <input id="key_word" class="title first" type="text" value="">
+    <input type="button" id="key_word_button" class="title second" value=">チェック" onclick="submit();">
+    <div class="rest">
+      <a id="icon-left" href="../circles"><i class="fas fa-spinner" style="color:white"></i><br><span
+          class="putit">サークル</span></a>
+      <a id="icon-right" href="../collection"><i class="fas fa-book" style="color:white"></i><br><span
+          class="putit">&nbsp;ズカン</span></a>
+      <a id="icon-center" href="../camera"><i class="fas fa-camera" style="color:white"></i><br><span
+          class="putit">&nbsp;カメラ</span></a>
+    </div>
+  </div>
+</body>
+
+</html>

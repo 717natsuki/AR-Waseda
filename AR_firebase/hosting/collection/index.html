@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link href="https://fonts.googleapis.com/css?family=Caveat|Kosugi+Maru|Major+Mono+Display&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <style media="screen">
+    html{
+      background-color: #73CFF2;
+      font-family: 'Caveat', cursive;
+      font-family: 'Major Mono Display', monospace;
+      font-family: 'Kosugi Maru', sans-serif;
+      /* width: 100%; */
+      /* width: 1000px; */
+      /* zoom: 100%; */
+      
+
+    }
+    body{
+    height:100%;
+}
+  </style>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+  <!-- _______________________________________________________________________ -->
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyD36srQdKUVnN8OxQjoR6ts5HdAV5Ppjgg",
+      authDomain: "waseda-sai-ar.firebaseapp.com",
+      databaseURL: "https://waseda-sai-ar.firebaseio.com",
+      projectId: "waseda-sai-ar",
+      storageBucket: "waseda-sai-ar.appspot.com",
+      messagingSenderId: "852005997622",
+      appId: "1:852005997622:web:baa38a2eeca89f7e"
+    };
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+  </script>
+  <!-- _______________________________________________________________________ -->
+  <script type="text/javascript">
+    var myId = document.cookie.split('=')[1];
+    var docRef = db.collection("Circles").doc("00");
+    console.log(myId)
+
+    console.log(docRef)
+
+    docRef.get().then(function(doc) {
+      if (doc.exists) {
+        all_id_array = doc.data()["participants_id"];
+        console.log(all_id_array)
+        if (all_id_array.includes(myId)) {
+          console.log("everyone happy");
+          document.getElementById("one").innerHTML = "AR pic1";
+        }
+      } else {
+        console.log("No such document!");
+      }
+    })
+    // _______________________________________________________________________
+    var myId = document.cookie.split('=')[1];
+    var docRef = db.collection("Circles").doc("01");
+
+    docRef.get().then(function(doc) {
+      if (doc.exists) {
+        all_id_array = doc.data()["participants_id"];
+        console.log(all_id_array)
+
+        if (all_id_array.includes(myId)) {
+          console.log("everyone happy");
+          document.getElementById("two").innerHTML = "AR pic2";
+
+        }
+      } else {
+        console.log("No such document!");
+      }
+    }).catch(function(error) {
+      console.log("Error getting document:", error);
+    });
+  </script>
+  <!-- _______________________________________________________________________ -->
+
+<script>
+  // _______________________________________________________________________
+  var myId = document.cookie.split('=')[1];
+  var docRef = db.collection("Circles").doc("02");
+
+  docRef.get().then(function(doc) {
+    if (doc.exists) {
+      all_id_array = doc.data()["participants_id"];
+      console.log(all_id_array)
+
+      if (all_id_array.includes(myId)) {
+        console.log("everyone happy");
+        document.getElementById("three").innerHTML = "AR pic3";
+      }
+    } else {
+      console.log("No such document!");
+    }
+  }).catch(function(error) {
+    console.log("Error getting document:", error);
+  });
+  // _______________________________________________________________________
+</script>
+<script>
+  // _______________________________________________________________________
+  var myId = document.cookie.split('=')[1];
+  var docRef = db.collection("Circles").doc("03");
+
+  docRef.get().then(function(doc) {
+    if (doc.exists) {
+      all_id_array = doc.data()["participants_id"];
+      console.log(all_id_array)
+
+      if (all_id_array.includes(myId)) {
+        console.log("everyone happy");
+        document.getElementById("four").innerHTML = "AR pic3";
+      }
+    } else {
+      console.log("No such document!");
+    }
+  }).catch(function(error) {
+    console.log("Error getting document:", error);
+  });
+  // _______________________________________________________________________
+</script>
+<script>
+  // _______________________________________________________________________
+  var myId = document.cookie.split('=')[1];
+  var docRef = db.collection("Circles").doc("04");
+
+  docRef.get().then(function(doc) {
+    if (doc.exists) {
+      all_id_array = doc.data()["participants_id"];
+      console.log(all_id_array)
+
+      if (all_id_array.includes(myId)) {
+        console.log("everyone happy");
+        document.getElementById("five").innerHTML = "AR pic3";
+      }
+    } else {
+      console.log("No such document!");
+    }
+  }).catch(function(error) {
+    console.log("Error getting document:", error);
+  });
+  // _______________________________________________________________________
+</script>
+
+
+
+<style media="screen">
+  .plz_center{
+    text-align: center;
+  }
+  th, td {
+    padding: 0px;
+  }
+  table {
+  border-spacing: 0px;
+}
+.center_image{
+  text-align: center;
+}
+</style>
+
+
+  <!-- <a href="../dashboard"><button type="button" class="btn btn-secondary">Secondary</button></a> -->
+  <table align="center">
+    <tr>
+
+      <td id="one" align="center">
+        <div class="conainer">
+          <img class="center_image"src="https://winaero.com/blog/wp-content/uploads/2019/09/Photos-app-icon-256-colorful.png" width="180" height="180" alt="">
+          <p class="plz_center">？？サークル</p>
+        </div>
+
+      </td>
+      <td id="two" align="center">
+        <img src="https://winaero.com/blog/wp-content/uploads/2019/09/Photos-app-icon-256-colorful.png" width="180" height="180" alt="">
+        <p class="plz_center">？？サークル</p>
+      </td>
+      <td id="three" align="center">
+        <img src="https://winaero.com/blog/wp-content/uploads/2019/09/Photos-app-icon-256-colorful.png" width="180" height="180" alt="">
+        <p class="plz_center">？？サークル</p>
+      </td>
+    </tr>
+    <tr>
+      <td id="four" align="center">
+        <img src="https://winaero.com/blog/wp-content/uploads/2019/09/Photos-app-icon-256-colorful.png" width="180" height="180" alt="">
+        <p class="plz_center">？？サークル</p>
+      </td>
+      <td id="five" align="center">
+        <img src="https://winaero.com/blog/wp-content/uploads/2019/09/Photos-app-icon-256-colorful.png" width="180" height="180" alt="">
+        <p class="plz_center">？？サークル</p>
+      </td>
+      <td><img src="https://winaero.com/blog/wp-content/uploads/2019/09/Photos-app-icon-256-colorful.png" width="180" height="180" alt="">
+      <p class="plz_center" align="center">？？サークル</p>
+      </td>
+    </tr>
+    <tr>
+      <td><img src="https://winaero.com/blog/wp-content/uploads/2019/09/Photos-app-icon-256-colorful.png" width="180" height="180" alt="">
+      <p class="plz_center" align="center">？？サークル</p>
+      </td>
+      <td><img src="https://winaero.com/blog/wp-content/uploads/2019/09/Photos-app-icon-256-colorful.png" width="180" height="180" alt="">
+      <p class="plz_center" align="center">？？サークル</p>
+      </td>
+      <td><img src="https://winaero.com/blog/wp-content/uploads/2019/09/Photos-app-icon-256-colorful.png" width="180" height="180" alt="">
+      <p class="plz_center" align="center">？？サークル</p>
+      </td>
+    </tr>
+    <tr>
+      <td><img src="https://winaero.com/blog/wp-content/uploads/2019/09/Photos-app-icon-256-colorful.png" width="180" height="180" alt="">
+      <p class="plz_center" align="center">？？サークル</p>
+      </td>
+
+      <td><img src="https://winaero.com/blog/wp-content/uploads/2019/09/Photos-app-icon-256-colorful.png" width="180" height="180" alt="">
+      <p class="plz_center" align="center">？？サークル</p>
+      </td>
+
+      <td><img src="https://winaero.com/blog/wp-content/uploads/2019/09/Photos-app-icon-256-colorful.png" width="180" height="180" alt="">
+      <p class="plz_center" align="center">？？サークル</p>
+      </td>
+
+    </tr>
+    <tr>
+      <td><img src="https://winaero.com/blog/wp-content/uploads/2019/09/Photos-app-icon-256-colorful.png" width="180" height="180" alt="">
+      <p class="plz_center" align="center">？？サークル</p>
+      </td>
+      <td><img src="https://winaero.com/blog/wp-content/uploads/2019/09/Photos-app-icon-256-colorful.png" width="180" height="180" alt="">
+      <p class="plz_center" align="center">？？サークル</p>
+      </td>
+      <td><img src="https://winaero.com/blog/wp-content/uploads/2019/09/Photos-app-icon-256-colorful.png" width="180" height="180" alt="">
+      <p class="plz_center" align="center">？？サークル</p>
+      </td>
+    </tr>
+
+  </table>
+
+
+
+</body>
+
+</html>

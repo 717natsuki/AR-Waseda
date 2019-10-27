@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+
+<body>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyD36srQdKUVnN8OxQjoR6ts5HdAV5Ppjgg",
+            authDomain: "waseda-sai-ar.firebaseapp.com",
+            databaseURL: "https://waseda-sai-ar.firebaseio.com",
+            projectId: "waseda-sai-ar",
+            storageBucket: "waseda-sai-ar.appspot.com",
+            messagingSenderId: "852005997622",
+            appId: "1:852005997622:web:baa38a2eeca89f7e"
+        };
+        firebase.initializeApp(firebaseConfig);
+        var db = firebase.firestore();
+    </script>
+    <script>
+        db.collection("Participants").where("finishedDate", "==", null)
+            .get()
+            .then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    if (doc.data().visitedCircles) {
+                        var table = document.getElementById("nowplayerrank");
+                        var row = table.insertRow(-1);
+                        var td0 = row.insertCell(-1);
+                        var td1 = row.insertCell(-1);
+                        td0.appendChild(document.createTextNode(doc.data().nickname));
+                        td1.appendChild(document.createTextNode(doc.data().visitedCircles.length));
+                    }
+                })
+            });
+        var oldplayers = [];
+        db.collection("Participants").where("finished", "==", true)
+            .get()
+            .then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    var startdate = new Date(doc.data().registrationDate.seconds * 1000);
+                    var findate = new Date(doc.data().finishedDate.seconds * 1000);
+                    var h = findate.getHours() - startdate.getHours();
+                    var min = findate.getMinutes() - startdate.getMinutes();
+                    var sec = findate.getSeconds() - startdate.getSeconds();
+                    oldplayers[oldplayers.length] = {
+                        id: doc.id,
+                        time: doc.data().finishedDate - doc.data().registrationDate,
+                        time_form: h + "時間" + min + "分" + sec + "秒"
+                    }
+                });
+
+                oldplayers.sort(function (a, b) {
+                    if (a.time < b.time) return -1;
+                    if (a.time > b.time) return 1;
+                    return 0;
+                });
+
+                console.log(oldplayers);
+
+                // ここまでオッケー
+
+                for (var i; i < 10; i++) {
+                    var table = document.getElementById("oldplayerrank");
+                    var row = table.insertRow(-1);
+                    var td0 = row.insertCell(-1);
+                    var td1 = row.insertCell(-1);
+                    td0.appendChild(document.createTextNode(doc.data().nickname));
+                    td1.appendChild(document.createTextNode(oldplayers[i].time_form));
+                }
+            });
+    </script>
+    現在の各プレイヤーの状況
+    <table border="5" id="nowplayerrank">
+        <tr>
+            <th>ニックネーム</th>
+            <th>行ったサークル数</th>
+        </tr>
+    </table>
+    クリア済みのプレイヤーのランキング
+    <table　border="5" id="oldplayerrank">
+        <tr>
+            <th>ニックネーム</th>
+            <th>クリアタイム</th>
+        </tr>
+    </table>
+</body>
+
+</html>
